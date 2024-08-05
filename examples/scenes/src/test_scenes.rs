@@ -53,6 +53,7 @@ macro_rules! scene {
 }
 
 export_scenes!(
+    images(images),
     splash_with_tiger(impls::splash_with_tiger(), "splash_with_tiger", false),
     funky_paths(funky_paths),
     stroke_styles(impls::stroke_styles(Affine::IDENTITY), "stroke_styles", false),
@@ -89,6 +90,8 @@ mod impls {
     use vello::*;
 
     const FLOWER_IMAGE: &[u8] = include_bytes!("../../assets/splash-flower.jpg");
+    const IMAGE_1: &[u8] = include_bytes!("../../assets/image1.png");
+    const IMAGE_2: &[u8] = include_bytes!("../../assets/image2.png");
 
     pub(super) fn emoji(scene: &mut Scene, params: &mut SceneParams) {
         let text_size = 120. + 20. * (params.time * 2.).sin() as f32;
@@ -644,6 +647,34 @@ mod impls {
                 &path,
             );
         }
+    }
+
+    pub(super) fn images(scene: &mut Scene, params: &mut SceneParams) {
+        let image1 = params
+            .images
+            .from_bytes(IMAGE_1.as_ptr() as usize, IMAGE_1)
+            .unwrap();
+        let image2 = params
+            .images
+            .from_bytes(IMAGE_2.as_ptr() as usize, IMAGE_2)
+            .unwrap();
+
+        scene.draw_image(
+            &image1,
+            Affine::scale(0.5) * Affine::translate((0.0, 0.0)) * Affine::rotate(0f64.to_radians()),
+        );
+        scene.draw_image(
+            &image2,
+            Affine::scale(0.5) * Affine::translate((135.0, 0.0)) * Affine::rotate(0f64.to_radians()),
+        );
+        scene.draw_image(
+            &image2,
+            Affine::scale(0.5) * Affine::translate((182.0, 0.0)) * Affine::rotate(0f64.to_radians()),
+        );
+        scene.draw_image(
+            &image2,
+            Affine::scale(0.5) * Affine::translate((229.0, 0.0)) * Affine::rotate(0f64.to_radians()),
+        );
     }
 
     pub(super) fn animated_text(scene: &mut Scene, params: &mut SceneParams) {
