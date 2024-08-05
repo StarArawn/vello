@@ -256,7 +256,8 @@ impl<'s> ApplicationHandler<UserEvent> for VelloApp<'s> {
                             self.scene_ix = self.scene_ix.saturating_sub(1);
                         }
                         Key::Named(NamedKey::ArrowRight) => {
-                            self.scene_ix = self.scene_ix.saturating_add(1);
+                            self.scene_ix += 1;
+                            dbg!(self.scene_ix);
                         }
                         Key::Named(NamedKey::ArrowUp) => self.complexity += 1,
                         Key::Named(NamedKey::ArrowDown) => {
